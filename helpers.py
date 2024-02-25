@@ -8,12 +8,12 @@ def get_city(c):
     c = c.lstrip().rstrip()
     params = {"name": c}
     BASE_URL = "https://geocoding-api.open-meteo.com/v1/search"
-    response = requests.get(BASE_URL, params=params)   
+    response = requests.get(BASE_URL, params=params, timeout=20)
     if response.status_code == 200:
         while True:
             c = c.lstrip().rstrip()
             params = {"name": c}
-            response = requests.get(BASE_URL, params=params)
+            response = requests.get(BASE_URL, params=params, timeout=20)
             try:
                 data = response.json()
                 check = data["results"][0]
@@ -53,7 +53,7 @@ def get_coordinates(c):
     '''Get and manage city coordinates'''
     BASE_URL = "https://geocoding-api.open-meteo.com/v1/search"
     params = {"name": c}
-    response = requests.get(BASE_URL, params=params)
+    response = requests.get(BASE_URL, params=params, timeout=20)
 
     if response.status_code == 200:
         data = response.json()
@@ -77,7 +77,7 @@ def get_weather(d, lt, lg):
         "end_date": d
     }
     BASE_URL = "https://api.open-meteo.com/v1/forecast"
-    response = requests.get(BASE_URL, params=params)
+    response = requests.get(BASE_URL, params=params, timeout=20)
 
     data = response.json()
     temp_min = data['daily']['temperature_2m_min'][0]
