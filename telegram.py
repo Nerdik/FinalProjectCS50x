@@ -88,10 +88,9 @@ def tele_get_date_func(call):
         for i in range(1, 7):
             plus7.append((today + datetime.timedelta(days=i)).isoformat())
         dates = plus7
-     
 
 
-
+'''Manage info with outout form'''
 @bot.message_handler(commands=['end'])
 def output(message):
     global latitude
@@ -99,23 +98,19 @@ def output(message):
     latitude = helpers.get_coordinates(city)[0]
     longitude = helpers.get_coordinates(city)[1]
 
-    min_temp_message = f"Min temperature: {helpers.get_weather(dates, latitude, longitude)[0]}°C"
-    bot.send_message(message.chat.id, min_temp_message, parse_mode='html')
+    if len(dates) == 7:
+        output_message = ""
+        for i in dates:
+            output_message = output_message + f"{i}\nTemperature: {round((helpers.get_weather(i, latitude, longitude)[0] + (helpers.get_weather(i, latitude, longitude)[1]) / 2), 1)}°C\n\n"
+        output_message = f"<b>{city}</b>\n\n" + output_message
+    else:
+        output_message = f"<b>{city}</b>\n\n\
+{dates[0]}\n\n\
+Min temperature: {helpers.get_weather(dates, latitude, longitude)[0]}°C\n\
+Max temperature: {helpers.get_weather(dates, latitude, longitude)[1]}°C\n\
+Precipitation: {helpers.get_weather(dates, latitude, longitude)[2]} mm"
 
-    max_temp_message = f"Max temperature: {helpers.get_weather(dates, latitude, longitude)[1]}°C"
-    bot.send_message(message.chat.id, max_temp_message, parse_mode='html')
-
-    precipitation_message = f"Precipitation: {helpers.get_weather(dates, latitude, longitude)[2]} mm\n"
-    bot.send_message(message.chat.id, precipitation_message, parse_mode='html')
-
-
-
-
-# @bot.message_handler(commands=['end'])
-# def tele_answer(message):    
-#     final_message = f"{city}\n{dates}"
-#     bot.send_message(message.chat.id, final_message, parse_mode='html')
-
+    bot.send_message(message.chat.id, output_message, parse_mode='html')
 
 
 bot.polling(none_stop=True, interval=0)
