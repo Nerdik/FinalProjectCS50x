@@ -74,13 +74,9 @@ Install package Requests
 ```
 pip install requests
 ```
-package pyTelegramBotAPI
+and package pyTelegramBotAPI
 ```
 pip install pyTelegramBotAPI
-```
-and packege Pytest
-```
-pip install pytest
 ```
 Or instead you can use the following
 ```
@@ -94,9 +90,3 @@ python telegram.py
 or other methods according to your system.
 
 [!NOTE] The user must have acsess to the internet for the proper usage of the program.
-
-#### Testing
-Run the test with the file ```test_telegram.py``` using following
-```
-pytest test_telegram.py
-```
