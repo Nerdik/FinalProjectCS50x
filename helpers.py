@@ -1,6 +1,6 @@
 '''Import main packages for functions'''
-import datetime
 import requests
+
 
 def get_city(c):
     '''Get the correct city name'''
@@ -13,9 +13,9 @@ def get_city(c):
             data = response.json()
             check = data["results"][0]
         except Exception:
-            return 1 # input("Please try to type the City name again: ")
+            return 1
         else:
-             return 2 # c.capitalize().title()            
+             return 2         
     else:
         return 0
 
